@@ -46,7 +46,7 @@ func (v *ControlPlaneValidator) Handle(ctx context.Context, req admission.Reques
 		return admission.Allowed("")
 	}
 
-	if req.Namespace == common.GetOperatorNamespace() {
+	if !common.Config.OLM.SplitModeEnabled && req.Namespace == common.GetOperatorNamespace() {
 		return validationFailedResponse(http.StatusBadRequest, metav1.StatusReasonBadRequest, fmt.Sprintf("service mesh may not be installed in the same project/namespace as the operator"))
 	}
 
@@ -69,7 +69,7 @@ func (v *ControlPlaneValidator) Handle(ctx context.Context, req admission.Reques
 	} else if smcprequest.New().GetDeletionTimestamp() != nil {
 		logger.Info("skipping deleted smcp resource")
 		return admission.Allowed("")
-	} else if ! smcprequest.NewVersion().IsSupported() {
+	} else if !smcprequest.NewVersion().IsSupported() {
 		return validationFailedResponse(http.StatusBadRequest, metav1.StatusReasonBadRequest, fmt.Sprintf("Only '%v' versions are supported", versions.GetSupportedVersionNames()))
 	} else if err := v.validateVersion(ctx, smcprequest.New(), smcprequest.NewVersion()); err != nil {
 		return validationFailedResponse(http.StatusBadRequest, metav1.StatusReasonBadRequest, err.Error())
