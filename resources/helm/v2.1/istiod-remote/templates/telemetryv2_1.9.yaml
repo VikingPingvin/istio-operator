@@ -10,11 +10,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-<<<<<<< HEAD:resources/helm/v2.1/mesh-config/templates/telemetryv2_1.9.yaml
     maistra-version: "2.1.1"
-=======
-    maistra-version: "2.1.0"
->>>>>>> add all resources generated during build:resources/helm/v2.1/istiod-remote/templates/telemetryv2_1.9.yaml
     istio.io/rev: {{ .Values.revision | default "default" }}
 spec:
   configPatches:
@@ -134,11 +130,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-<<<<<<< HEAD:resources/helm/v2.1/mesh-config/templates/telemetryv2_1.9.yaml
     maistra-version: "2.1.1"
-=======
-    maistra-version: "2.1.0"
->>>>>>> add all resources generated during build:resources/helm/v2.1/istiod-remote/templates/telemetryv2_1.9.yaml
     istio.io/rev: {{ .Values.revision | default "default" }}
 spec:
   configPatches:
@@ -202,11 +194,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-<<<<<<< HEAD:resources/helm/v2.1/mesh-config/templates/telemetryv2_1.9.yaml
     maistra-version: "2.1.1"
-=======
-    maistra-version: "2.1.0"
->>>>>>> add all resources generated during build:resources/helm/v2.1/istiod-remote/templates/telemetryv2_1.9.yaml
     istio.io/rev: {{ .Values.revision | default "default" }}
 spec:
   configPatches:
@@ -385,11 +373,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-<<<<<<< HEAD:resources/helm/v2.1/mesh-config/templates/telemetryv2_1.9.yaml
     maistra-version: "2.1.1"
-=======
-    maistra-version: "2.1.0"
->>>>>>> add all resources generated during build:resources/helm/v2.1/istiod-remote/templates/telemetryv2_1.9.yaml
     istio.io/rev: {{ .Values.revision | default "default" }}
 spec:
   configPatches:
@@ -562,11 +546,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-<<<<<<< HEAD:resources/helm/v2.1/mesh-config/templates/telemetryv2_1.9.yaml
     maistra-version: "2.1.1"
-=======
-    maistra-version: "2.1.0"
->>>>>>> add all resources generated during build:resources/helm/v2.1/istiod-remote/templates/telemetryv2_1.9.yaml
     istio.io/rev: {{ .Values.revision | default "default" }}
 spec:
   configPatches:
@@ -685,11 +665,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-<<<<<<< HEAD:resources/helm/v2.1/mesh-config/templates/telemetryv2_1.9.yaml
     maistra-version: "2.1.1"
-=======
-    maistra-version: "2.1.0"
->>>>>>> add all resources generated during build:resources/helm/v2.1/istiod-remote/templates/telemetryv2_1.9.yaml
     istio.io/rev: {{ .Values.revision | default "default" }}
 spec:
   configPatches:
@@ -803,11 +779,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-<<<<<<< HEAD:resources/helm/v2.1/mesh-config/templates/telemetryv2_1.9.yaml
     maistra-version: "2.1.1"
-=======
-    maistra-version: "2.1.0"
->>>>>>> add all resources generated during build:resources/helm/v2.1/istiod-remote/templates/telemetryv2_1.9.yaml
     istio.io/rev: {{ .Values.revision | default "default" }}
 spec:
   configPatches:
