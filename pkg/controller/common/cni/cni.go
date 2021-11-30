@@ -32,7 +32,6 @@ func InitConfig(m manager.Manager) (Config, error) {
 		config.Enabled = false
 		return config, nil
 	}
-
 	_, err := m.GetRESTMapper().ResourcesFor(schema.GroupVersionResource{
 		Group:    "k8s.cni.cncf.io",
 		Version:  "v1",
