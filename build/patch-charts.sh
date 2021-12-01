@@ -386,6 +386,7 @@ function patchSidecarInjector() {
       values:\
       - "true"\
 \{\{- end \}\}\
+\{\{- end \}\}\
 \{\{- end \}\}
 '
   sed_wrap -i -e "/if .Values.sidecarInjectorWebhook.enableNamespacesByDefault/ i$matchExpr" $webhookconfig
@@ -393,8 +394,6 @@ function patchSidecarInjector() {
   sed_wrap -i -e '/if .Values.sidecarInjectorWebhook.enableNamespacesByDefault/,$d' $webhookconfig
 
   echo "{{- end }}" >> $webhookconfig
-  # remove {{- if not .Values.global.operatorManageWebhooks }} ... {{- end }}
-  sed_wrap -i -e '/operatorManageWebhooks/ d' $webhookconfig
 
   # - change privileged value on istio-proxy injection configmap to false
   # setting the proper values will fix this:
@@ -481,7 +480,7 @@ function removeUnsupportedCharts() {
   echo "removing unsupported Helm charts"
   rm -rf ${HELM_DIR}/istio-cni
   rm -rf ${HELM_DIR}/istiocoredns
-  rm -rf ${HELM_DIR}/istiod-remote
+  # rm -rf ${HELM_DIR}/istiod-remote
   rm -rf ${HELM_DIR}/istio-operator
 }
 
@@ -545,4 +544,8 @@ patchSidecarInjector
 moveEnvoyFiltersToMeshConfigChart
 copyGlobalValues
 # TODO: remove this hack once the image is updated to include workingDir
+
+# XXX: hacks - remove before 2.0 release
 hacks
+cp ${HELM_DIR}/istio-control/istio-discovery/templates/validatingwebhookconfiguration.yaml resources/helm/v2.1/istiod-remote/templates/
+cp ${HELM_DIR}/istio-control/istio-discovery/templates/mutatingwebhook.yaml resources/helm/v2.1/istiod-remote/templates/

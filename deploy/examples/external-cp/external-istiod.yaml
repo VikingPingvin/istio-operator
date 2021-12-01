@@ -1,0 +1,51 @@
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: excp
+spec:
+  profiles:
+    - "external"
+  version: v2.1
+  gateways:
+    enabled: false
+    ingress:
+      enabled: false
+      ingress: false
+      service:
+        type: ClusterIP
+    egress:
+      enabled: false
+    openshiftRoute:
+      enabled: false
+  cluster:
+    multiCluster:
+      enabled: true
+
+  general:
+    logging:
+      componentLevels:
+        default: debug
+
+  techPreview:
+    meshConfig:
+      rootNamespace: default
+      defaultConfig:
+        discoveryAddress: <CP_URL>:15012
+        proxyMetadata:
+          XDS_ROOT_CA: /etc/ssl/certs/ca-bundle.crt
+          CA_ROOT_CA: /etc/ssl/certs/ca-bundle.crt
+    global:
+      caAddress: <CP_URL>:15012
+      istioNamespace: external-istiod
+      meshID: mesh1
+      multiCluster:
+        clusterName: remote
+    sidecarInjectorWebhook:
+      injectedAnnotations:
+        k8s.v1.cni.cncf.io/networks: "istio-cni"
+    istio_cni:
+      enabled: true
+    pilot:
+      env:
+        INJECTION_WEBHOOK_CONFIG_NAME: ""
+        VALIDATION_WEBHOOK_CONFIG_NAME: ""

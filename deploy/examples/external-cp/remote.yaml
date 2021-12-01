@@ -1,0 +1,51 @@
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: remote
+  namespace: external-istiod
+spec:
+  version: "v2.1"
+  profiles:
+    - "remote"
+  gateways:
+    enabled: true
+    ingress:
+      enabled: true
+      ingress: true
+      service:
+        type: LoadBalancer
+    egress:
+      enabled: false
+    openshiftRoute:
+      enabled: false
+  techPreview:
+    meshConfig:
+      rootNamespace: external-istiod
+      defaultConfig:
+        discoveryAddress: <CP_URL>:15012
+        proxyMetadata:
+          XDS_ROOT_CA: /etc/ssl/certs/ca-bundle.crt
+          CA_ROOT_CA: /etc/ssl/certs/ca-bundle.crt
+    global:
+      pilotCertProvider: <CP_URL>:15012
+      caAddress: <CP_URL>:15012
+      istioNamespace: external-istiod
+      meshID: mesh1
+      multiCluster:
+        clusterName: remote
+    sidecarInjectorWebhook:
+      injectedAnnotations:
+        k8s.v1.cni.cncf.io/networks: "istio-cni"  
+    istiodRemote:
+      injectionURL: https://<CP_URL>:15017/inject
+    base:
+      validationURL: https://<CP_URL>:15017/validate
+---
+apiVersion: maistra.io/v1
+kind: ServiceMeshMemberRoll
+metadata:
+  namespace: external-istiod
+  name: default
+spec:
+  members:
+  - default

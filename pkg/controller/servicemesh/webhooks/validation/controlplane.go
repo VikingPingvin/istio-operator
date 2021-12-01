@@ -46,7 +46,8 @@ func (v *ControlPlaneValidator) Handle(ctx context.Context, req admission.Reques
 		return admission.Allowed("")
 	}
 
-	if req.Namespace == common.GetOperatorNamespace() {
+	// TODO: Need switch for external/split control plane detection (Dataplane is in a different clustern than the operator)
+	if !common.Config.OLM.SplitModeEnabled && req.Namespace == common.GetOperatorNamespace() {
 		return validationFailedResponse(http.StatusBadRequest, metav1.StatusReasonBadRequest, fmt.Sprintf("service mesh may not be installed in the same project/namespace as the operator"))
 	}
 

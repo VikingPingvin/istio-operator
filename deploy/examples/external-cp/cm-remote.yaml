@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: istio-remote
+  namespace: external-istiod
+  labels:
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "Pilot"
+    release: istio
+data:
+  meshNetworks: |-
+    networks: {}
+  mesh: |-
+    defaultConfig:
+      discoveryAddress: <CP_URL>:15010
+      meshId: mesh1
+    enablePrometheusMerge: true
+    rootNamespace: external-istiod
+    trustDomain: cluster.local

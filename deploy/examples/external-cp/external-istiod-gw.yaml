@@ -1,0 +1,77 @@
+# This content is consumed by another mesh instance, not the same as will serve the remote dataplane.
+# The purpose is to expose the istiod services towards the remote dataplane. Could be achieved by any other L7 Ingress GW.
+
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: external-istiod-gw
+  namespace: external-istiod
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 15012
+        protocol: https
+        name: https-XDS
+      tls:
+        mode: SIMPLE
+        credentialName: <TLS_SECRET_NAME>
+      hosts:
+      - <CP_URL>
+    - port:
+        number: 15017
+        protocol: https
+        name: https-WEBHOOK
+      tls:
+        mode: SIMPLE
+        credentialName: <TLS_SECRET_NAME>
+      hosts:
+      - <CP_URL>
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+   name: external-istiod-vs
+   namespace: external-istiod
+spec:
+    hosts:
+    - <CP_URL>
+    gateways:
+    - external-istiod-gw
+    http:
+    - match:
+      - port: 15012
+      route:
+      - destination:
+          host: istiod-<SMCP_NAME>.external-istiod.svc.cluster.local
+          port:
+            number: 15012
+    - match:
+      - port: 15017
+      route:
+      - destination:
+          host: istiod-<SMCP_NAME>.external-istiod.svc.cluster.local
+          port:
+            number: 443
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: external-istiod-dr
+  namespace: external-istiod
+spec:
+  host: istiod-<SMCP_NAME>.external-istiod.svc.cluster.local
+  trafficPolicy:
+    portLevelSettings:
+    - port:
+        number: 15012
+      tls:
+        mode: SIMPLE
+      connectionPool:
+        http:
+          h2UpgradePolicy: UPGRADE
+    - port:
+        number: 443
+      tls:
+        mode: SIMPLE
