@@ -32,7 +32,7 @@ type ServiceMeshControlPlane struct {
 	// This includes the configuration options for all components that comprise
 	// the control plane.
 	// +kubebuilder:validation:Required
-	Spec   ControlPlaneSpec   `json:"spec"`
+	Spec ControlPlaneSpec `json:"spec"`
 
 	// The current status of this ServiceMeshControlPlane and the components
 	// that comprise the control plane. This data may be out of date by some
@@ -103,7 +103,6 @@ func (s *ControlPlaneStatus) GetReconciledVersion() string {
 	return status.ComposeReconciledVersion(s.OperatorVersion, s.ObservedGeneration)
 }
 
-
 // ControlPlaneSpec represents the configuration for installing a control plane
 type ControlPlaneSpec struct {
 	// XXX: the resource name is intended to be used as the revision name, which
@@ -155,6 +154,13 @@ type ControlPlaneSpec struct {
 	// Runtime configuration for pilot (and galley, etc., pre 2.0)
 	// +optional
 	Runtime *ControlPlaneRuntimeConfig `json:"runtime,omitempty"`
+
+	ControlPlaneMode *ControlPlaneModeConfig `json:"controlPlaneMode,omitempty""`
+
+	RemoteMode *RemoteModeConfig `json:"remoteMode,omitempty"`
+
+	CNI *CNIConfig `json:"cni,omitempty"`
+
 	// Addons is used to configure additional features beyond core control plane
 	// components, e.g. visualization, metric storage, etc.
 	// +optional
