@@ -159,8 +159,6 @@ type ControlPlaneSpec struct {
 
 	RemoteMode *RemoteModeConfig `json:"remoteMode,omitempty"`
 
-	CNI *CNIConfig `json:"cni,omitempty"`
-
 	// Addons is used to configure additional features beyond core control plane
 	// components, e.g. visualization, metric storage, etc.
 	// +optional
