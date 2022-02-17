@@ -530,6 +530,13 @@ function hacks() {
     }' ${HELM_DIR}/istio-control/istio-discovery/templates/deployment.yaml
 }
 
+# Copying the correct ValidatingWebhookConfiguration and MutatingWebhookConfiguration from the istio-discovery chart
+# to istiod-remote because of the differences from the upstream Istio
+function copyIstioDiscoveryWebhooksToRemoteChart() {
+  cp ${HELM_DIR}/istio-control/istio-discovery/templates/validatingwebhookconfiguration.yaml resources/helm/v2.1/istiod-remote/templates/
+  cp ${HELM_DIR}/istio-control/istio-discovery/templates/mutatingwebhook.yaml resources/helm/v2.1/istiod-remote/templates/
+}
+
 copyOverlay
 removeUnsupportedCharts
 
@@ -545,5 +552,4 @@ moveEnvoyFiltersToMeshConfigChart
 copyGlobalValues
 # TODO: remove this hack once the image is updated to include workingDir
 hacks
-cp ${HELM_DIR}/istio-control/istio-discovery/templates/validatingwebhookconfiguration.yaml resources/helm/v2.1/istiod-remote/templates/
-cp ${HELM_DIR}/istio-control/istio-discovery/templates/mutatingwebhook.yaml resources/helm/v2.1/istiod-remote/templates/
+copyIstioDiscoveryWebhooksToRemoteChart
