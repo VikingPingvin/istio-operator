@@ -155,7 +155,9 @@ type ControlPlaneSpec struct {
 	// +optional
 	Runtime *ControlPlaneRuntimeConfig `json:"runtime,omitempty"`
 
-	ControlPlaneMode *ControlPlaneModeConfig `json:"controlPlaneMode,omitempty""`
+	ControlPlaneMode *ControlPlaneModeConfig `json:"controlPlaneMode,omitempty"`
+
+	MeshConfig *MeshConfigConfig `json:"meshConfig,omitempty"`
 
 	RemoteMode *RemoteModeConfig `json:"remoteMode,omitempty"`
 

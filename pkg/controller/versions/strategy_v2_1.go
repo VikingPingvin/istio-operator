@@ -74,7 +74,7 @@ var (
 		},
 		MeshConfigChart: {
 			path:         "mesh-config",
-			enabledField: "",
+			enabledField: "meshConfig",
 		},
 		WASMExtensionsChart: {
 			path:         "wasm-extensions",
@@ -280,6 +280,20 @@ func (v *versionStrategyV2_1) Render(ctx context.Context, cr *common.ControllerR
 		}
 	} else {
 		err = spec.Istio.SetField("istioDiscovery.enabled", true)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if smcp.Spec.MeshConfig != nil {
+		if smcp.Spec.MeshConfig.Enabled != nil {
+			err = spec.Istio.SetField("meshConfig.enabled", *smcp.Spec.MeshConfig.Enabled)
+			if err != nil {
+				return nil, err
+			}
+		}
+	} else {
+		err = spec.Istio.SetField("meshConfig.enabled", true)
 		if err != nil {
 			return nil, err
 		}
