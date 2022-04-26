@@ -74,7 +74,7 @@ var (
 		},
 		MeshConfigChart: {
 			path:         "mesh-config",
-			enabledField: "",
+			enabledField: "meshConfig",
 		},
 		WASMExtensionsChart: {
 			path:         "wasm-extensions",
